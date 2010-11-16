@@ -56,6 +56,10 @@ pack(CmdStat, Snum, #deliver_sm_resp{}=Body) ->
 	Bin = smpp34pdu_deliver_sm_resp:pack(Body),
 	pack(?DELIVER_SM_RESP, CmdStat, Snum, Bin);
 
+pack(CmdStat, Snum, #data_sm_resp{}=Body) ->
+	Bin = smpp34pdu_data_sm_resp:pack(Body),
+	pack(?DATA_SM_RESP, CmdStat, Snum, Bin);
+
 pack(CmdStat, Snum, #unbind{}) ->
 	pack(?UNBIND, CmdStat, Snum, <<>>);
 
@@ -166,6 +170,8 @@ unpack_body(?DELIVER_SM, Bin) ->
 	smpp34pdu_deliver_sm:unpack(Bin);
 unpack_body(?DELIVER_SM_RESP, Bin) ->
 	smpp34pdu_deliver_sm_resp:unpack(Bin);
+unpack_body(?DATA_SM_RESP, Bin) ->
+	smpp34pdu_data_sm_resp:unpack(Bin);
 unpack_body(?UNBIND, _) ->
 	#unbind{};
 unpack_body(?UNBIND_RESP, _) ->
